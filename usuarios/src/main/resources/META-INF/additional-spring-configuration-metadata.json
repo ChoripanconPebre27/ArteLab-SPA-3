@@ -1,0 +1,25 @@
+{
+  "groups": [
+    {
+      "name": "security.jwt",
+      "type": "dsy.artelab.usuarios.security.JwtService",
+      "sourceType": "dsy.artelab.usuarios.security.JwtService",
+      "description": "JWT security settings for token signing and expiration."
+    }
+  ],
+  "properties": [
+    {
+      "name": "security.jwt.secret",
+      "type": "java.lang.String",
+      "sourceType": "dsy.artelab.usuarios.security.JwtService",
+      "description": "Secret key used to sign and validate JWT tokens."
+    },
+    {
+      "name": "security.jwt.expiration-minutes",
+      "type": "java.lang.Long",
+      "sourceType": "dsy.artelab.usuarios.security.JwtService",
+      "description": "JWT token expiration time in minutes.",
+      "defaultValue": 60
+    }
+  ]
+}

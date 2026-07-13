@@ -1,0 +1,47 @@
+package dsy.artelab.usuarios.controller;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import dsy.artelab.usuarios.dto.LoginRequest;
+import dsy.artelab.usuarios.dto.LoginResponse;
+import dsy.artelab.usuarios.security.JwtService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
+
+@RestController
+@RequestMapping("/api/v1/auth")
+@Tag(name = "Autenticación", description = "Controlador para la gestión de autenticación")
+public class AuthController {
+
+    private final AuthenticationManager authenticationManager;
+    private final JwtService jwtService;
+
+    public AuthController(AuthenticationManager authenticationManager, JwtService jwtService) {
+        this.authenticationManager = authenticationManager;
+        this.jwtService = jwtService;
+    }
+
+    @PostMapping("/login")
+    @Operation(summary = "Iniciar sesión", description = "Permite a un usuario iniciar sesión y obtener un token de autenticación")
+    @ApiResponses(value = {
+        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "200", description = "Inicio de sesión exitoso"),
+        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "400", description = "Datos de entrada inválidos"),
+        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "401", description = "Credenciales inválidas"),
+        @io.swagger.v3.oas.annotations.responses.ApiResponse(responseCode = "500", description = "Error interno del servidor")
+    })
+    public ResponseEntity<LoginResponse> login(@Valid @RequestBody LoginRequest request) {
+        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
+                request.getCorreo(),
+                request.getClave()));
+        String token = jwtService.generateToken(request.getCorreo());
+        return ResponseEntity.ok(new LoginResponse(token, jwtService.getExpirationSeconds()));
+    }
+}

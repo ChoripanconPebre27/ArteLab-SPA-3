@@ -1,0 +1,37 @@
+{
+  "properties": [
+    {
+      "name": "usuarios.service.base-url",
+      "type": "java.lang.String",
+      "description": "Base URL del microservicio de usuarios usado por WebClient.",
+      "defaultValue": "http://localhost:8081"
+    },
+    {
+      "name": "usuarios.service.timeout-seconds",
+      "type": "java.lang.Long",
+      "description": "Tiempo maximo de espera para conectar y recibir respuesta del microservicio de usuarios.",
+      "defaultValue": 5
+    },
+    {
+      "name": "security.jwt.secret",
+      "type": "java.lang.String",
+      "description": "Clave secreta usada para firmar tokens JWT."
+    },
+    {
+      "name": "security.jwt.expiration-minutes",
+      "type": "java.lang.Long",
+      "description": "Tiempo de expiracion del token JWT en minutos.",
+      "defaultValue": 60
+    },
+    {
+      "name": "security.auth.username",
+      "type": "java.lang.String",
+      "description": "Usuario en memoria usado para autenticar el microservicio artelab."
+    },
+    {
+      "name": "security.auth.password",
+      "type": "java.lang.String",
+      "description": "Clave en memoria usada para autenticar el microservicio artelab."
+    }
+  ]
+}
